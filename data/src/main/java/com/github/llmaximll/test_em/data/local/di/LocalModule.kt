@@ -2,6 +2,7 @@ package com.github.llmaximll.test_em.data.local.di
 
 import android.content.Context
 import androidx.room.Room
+import com.github.llmaximll.test_em.data.local.daos.ItemDao
 import com.github.llmaximll.test_em.data.local.daos.UserDao
 import dagger.Module
 import dagger.Provides
@@ -21,9 +22,12 @@ object LocalModule {
             context,
             AppDb::class.java,
             AppDb.DB_NAME
-        ).build()
+        )
+            .build()
 
-    //region User
     @Provides
     fun provideUserDao(appDb: AppDb): UserDao = appDb.userDao()
+
+    @Provides
+    fun provideItemDao(appDb: AppDb): ItemDao = appDb.itemDao()
 }

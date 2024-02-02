@@ -86,7 +86,7 @@ class SignUpViewModel @Inject constructor(
 
         _signUpState.value = SignUpState.Loading
 
-        val result = userRepository.insertUser(
+        val result = userRepository.insertUserLocal(
             User(
                 name = name.value.value,
                 lastName = lastName.value.value,

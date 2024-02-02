@@ -10,9 +10,9 @@ class UserRepositoryImpl @Inject constructor(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
 
-    override suspend fun insertUser(user: User): Long? =
+    override suspend fun insertUserLocal(user: User): Long? =
         userLocalDataSource.insertUser(user.asEntity())
 
-    override suspend fun isUserLoggedIn(): Boolean =
+    override suspend fun isUserLoggedInLocal(): Boolean =
         userLocalDataSource.isUserLoggedIn()
 }

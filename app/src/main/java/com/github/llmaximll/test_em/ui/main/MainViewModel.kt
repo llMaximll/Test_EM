@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.github.llmaximll.test_em.core.common.launchWithHandler
 import com.github.llmaximll.test_em.core.common.repositories_abstract.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,6 +28,6 @@ class MainViewModel @Inject constructor(
     ) {
         _isUserLoggedIn.value = null
 
-        _isUserLoggedIn.value = userRepository.isUserLoggedIn()
+        _isUserLoggedIn.value = userRepository.isUserLoggedInLocal()
     }
 }

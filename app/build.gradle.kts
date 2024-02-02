@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":features:sign-up"))
     implementation(project(":features:main"))
+    implementation(project(":features:catalog"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

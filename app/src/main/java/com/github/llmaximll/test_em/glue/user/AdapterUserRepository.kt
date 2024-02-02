@@ -9,9 +9,9 @@ class AdapterUserRepository @Inject constructor(
     private val userRepository: UserRepositoryImpl
 ) : UserRepository {
 
-    override suspend fun insertUser(user: User) =
-        userRepository.insertUser(user)
+    override suspend fun insertUserLocal(user: User) =
+        userRepository.insertUserLocal(user)
 
-    override suspend fun isUserLoggedIn(): Boolean =
-        userRepository.isUserLoggedIn()
+    override suspend fun isUserLoggedInLocal(): Boolean =
+        userRepository.isUserLoggedInLocal()
 }

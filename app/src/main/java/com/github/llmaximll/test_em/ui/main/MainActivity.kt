@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -31,26 +29,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
 import com.github.llmaximll.sign_up.routeSignUpScreen
 import com.github.llmaximll.test_em.core.common.components.CommonTopAppBar
 import com.github.llmaximll.test_em.core.common.log
 import com.github.llmaximll.test_em.core.common.theme.AppColors
 import com.github.llmaximll.test_em.core.common.theme.CustomTypography
 import com.github.llmaximll.test_em.core.common.theme.Test_EMTheme
-import com.github.llmaximll.test_em.features.main.routeMainScreen
+import com.github.llmaximll.test_em.features.catalog.routeCatalogScreen
 import com.github.llmaximll.test_em.navigation.Destination
 import com.github.llmaximll.test_em.navigation.TestEmNavHost
 import com.github.llmaximll.test_em.navigation.TopLevelDestination
 import com.github.llmaximll.test_em.navigation.titleResOrNull
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.async
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -65,35 +60,16 @@ class MainActivity @Inject constructor(
 
         enableEdgeToEdge()
 
-        installSplashScreen().setKeepOnScreenCondition {
-            viewModel.isUserLoggedIn.value == null
-        }
-
         setContent {
             Test_EMTheme {
                 val navController = rememberNavController()
                 val destination = navController.currentBackStackEntryAsState().value?.destination
 
-                val currentTopLevelDestination = remember {
+                /*val currentTopLevelDestination = remember {
                     TopLevelDestination.entries.find { it.route == destination?.route }
-                }
+                }*/
 
                 val isUserLoggedIn by viewModel.isUserLoggedIn.collectAsState()
-
-                LaunchedEffect(isUserLoggedIn) {
-                    log("IsUserLoggedIn: $isUserLoggedIn")
-
-                    if (isUserLoggedIn == true) {
-                        navController.graph.setStartDestination(routeMainScreen)
-                        navController.navigate(routeMainScreen) {
-                            navController.graph.findStartDestination().route?.let { route ->
-                                popUpTo(route) {
-                                    inclusive = true
-                                }
-                            }
-                        }
-                    }
-                }
 
                 LaunchedEffect(destination) {
                     log("CurrentDestination: ${destination?.route}")
@@ -114,11 +90,16 @@ class MainActivity @Inject constructor(
                     bottomBar = {
                         if (destination?.route != Destination.SignUp.route) {
                             TestEmBottomBar(
-                                currentDestination = currentTopLevelDestination,
+                                currentDestination = destination,
                                 onNavigateToDestination = {
                                     log("TopLevelDestination: $it")
-                                    if (destination?.route != it.route)
-                                        navController.navigate(it.route)
+                                    navController.navigate(it.route) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
                                 }
                             )
                         }
@@ -143,7 +124,7 @@ class MainActivity @Inject constructor(
 
     @Composable
     private fun TestEmBottomBar(
-        currentDestination: TopLevelDestination?,
+        currentDestination: NavDestination?,
         onNavigateToDestination: (TopLevelDestination) -> Unit,
         modifier: Modifier = Modifier
     ) {
@@ -161,9 +142,14 @@ class MainActivity @Inject constructor(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     TopLevelDestination.entries.forEach { destination ->
+                        log("NavigationBarItem:: destination: $destination currentDestination: $currentDestination")
+
                         NavigationBarItem(
-                            selected = destination == currentDestination,
+                            selected = currentDestination?.hierarchy?.any {
+                                it.route?.contains(destination.name, true) ?: false
+                            } ?: false,
                             onClick = {
+                                log("NavigationBarItem:: selectedDestination: $destination")
                                 onNavigateToDestination(destination)
                             },
                             icon = {
@@ -176,7 +162,8 @@ class MainActivity @Inject constructor(
                                 unselectedIconColor = AppColors.ElementDarkGrey,
                                 selectedIconColor = AppColors.ElementPink,
                                 unselectedTextColor = AppColors.TextDarkGrey,
-                                selectedTextColor = AppColors.TextPink
+                                selectedTextColor = AppColors.TextPink,
+                                indicatorColor = AppColors.BackgroundWhite
                             ),
                             label = {
                                 Text(

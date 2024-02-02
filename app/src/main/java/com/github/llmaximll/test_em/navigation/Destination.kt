@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavDestination
 import com.github.llmaximll.sign_up.routeSignUpScreen
 import com.github.llmaximll.test_em.R
+import com.github.llmaximll.test_em.features.catalog.routeCatalogScreen
 import com.github.llmaximll.test_em.features.main.routeMainScreen
 import com.github.llmaximll.test_em.core.common.R as ResCommon
 
@@ -23,7 +24,7 @@ enum class Destination(
     ),
     Catalog(
         titleRes = R.string.destination_title_catalog,
-        route = ""
+        route = routeCatalogScreen
     ),
     Cart(
         titleRes = R.string.destination_title_cart,

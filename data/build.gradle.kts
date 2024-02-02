@@ -88,6 +88,11 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp.logging.interceptor)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
