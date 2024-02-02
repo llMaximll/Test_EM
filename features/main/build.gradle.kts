@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.llmaximll.sign_up"
+    namespace = "com.github.llmaximll.test_em.features.main"
     compileSdk = AppVersions.COMPILE_SDK
 
     defaultConfig {

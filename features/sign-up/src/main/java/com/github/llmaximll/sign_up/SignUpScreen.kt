@@ -28,10 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,9 +54,18 @@ fun SignUpScreen(
     onSignUp: () -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
+    val signUpState by viewModel.signUpState.collectAsState()
+
     val name by viewModel.name.collectAsState()
     val lastName by viewModel.lastName.collectAsState()
     val phoneNumber by viewModel.phoneNumber.collectAsState()
+
+    LaunchedEffect(signUpState) {
+        log("SignUpState: $signUpState")
+
+        if (signUpState is SignUpState.Success)
+            onSignUp()
+    }
 
     Column(
         modifier = modifier
@@ -75,9 +80,11 @@ fun SignUpScreen(
             name = name,
             lastName = lastName,
             phoneNumber = phoneNumber,
+            signUpButtonEnabled = signUpState !in listOf(SignUpState.Loading, SignUpState.Success),
             onNameChange = { viewModel.changeName(it) },
             onLastNameChange = { viewModel.changeLastName(it) },
             onPhoneNumberChange = { viewModel.changePhoneNumber(it) },
+            onSignUp = viewModel::signUp
         )
 
         LoyaltyProgramText()
@@ -90,9 +97,11 @@ private fun Fields(
     name: InputState,
     lastName: InputState,
     phoneNumber: InputState,
+    signUpButtonEnabled: Boolean,
     onNameChange: (InputState) -> Unit,
     onLastNameChange: (InputState) -> Unit,
     onPhoneNumberChange: (InputState) -> Unit,
+    onSignUp: () -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -122,7 +131,8 @@ private fun Fields(
 
         SignUpButton(
             modifier = Modifier.padding(top = 16.dp),
-            isEnabled = name.isSuccess && lastName.isSuccess && phoneNumber.isSuccess
+            isEnabled = signUpButtonEnabled && name.isSuccess && lastName.isSuccess && phoneNumber.isSuccess,
+            onSignUp = onSignUp
         )
     }
 }
@@ -198,7 +208,7 @@ private fun EmailField(
     @StringRes placeholderRes: Int,
     value: String,
     onValueChange: (String) -> Unit,
-    @StringRes errorMessageRes: Int?
+    @StringRes errorMessageRes: Int?,
 ) {
     TextField(
         modifier = modifier.fillMaxWidth(),
@@ -267,10 +277,11 @@ private fun EmailField(
 private fun SignUpButton(
     modifier: Modifier = Modifier,
     isEnabled: Boolean,
+    onSignUp: () -> Unit,
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
-        onClick = { /*TODO*/ },
+        onClick = { onSignUp() },
         shape = RoundedCornerShape(8.dp),
         contentPadding = PaddingValues(vertical = 16.dp),
         enabled = isEnabled,

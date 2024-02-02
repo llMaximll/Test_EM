@@ -2,4 +2,9 @@
     <string name="app_name">Test_EM</string>
 
     <string name="destination_title_sign_up">Вход</string>
+    <string name="destination_title_main">Главная</string>
+    <string name="destination_title_catalog">Каталог</string>
+    <string name="destination_title_cart">Корзина</string>
+    <string name="destination_title_discount">Акции</string>
+    <string name="destination_title_profile">Профиль</string>
 </resources>

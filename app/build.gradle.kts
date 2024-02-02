@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":data"))
     implementation(project(":features:sign-up"))
+    implementation(project(":features:main"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -66,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.navigation)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
@@ -73,6 +75,8 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     implementation(libs.timber)
+
+    implementation(libs.splash)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
