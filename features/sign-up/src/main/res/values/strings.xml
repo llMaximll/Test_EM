@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loyalty_program_1">Нажимая кнопку “Войти”, Вы принимаете</string>
+    <string name="loyalty_program_2">условия программы лояльности</string>
+    <string name="name">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="sign_up_button">Войти</string>
+    <string name="input_state_empty">Поле не может быть пустым</string>
+    <string name="input_state_name_regex">Поле может содержать только кириллицу без пробелов</string>
+    <string name="input_state_phone_number_incorrect">Некорректный номер телефона</string>
+</resources>

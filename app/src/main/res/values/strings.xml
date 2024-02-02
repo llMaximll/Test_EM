@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Test_EM</string>
+
+    <string name="destination_title_sign_up">Вход</string>
+</resources>
