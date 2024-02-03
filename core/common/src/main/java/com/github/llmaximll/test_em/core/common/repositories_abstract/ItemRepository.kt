@@ -12,4 +12,6 @@ interface ItemRepository {
     suspend fun markItemFavoriteLocal(id: String, isFavorite: Boolean)
 
     fun getAllFavoriteItemIdsFlowLocal(): Flow<List<String>>
+
+    suspend fun getItemByIdLocal(id: String): Item?
 }

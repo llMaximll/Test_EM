@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.github.llmaximll.test_em.core.common.Sort
 import com.github.llmaximll.test_em.data.local.models.ItemEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -53,11 +52,13 @@ interface ItemDao {
     )
     suspend fun getAllItemsOrderByPrice(tag: String?): List<ItemEntity>
 
-    @Query("""
+    @Query(
+        """
         UPDATE item
         SET isFavorite = :isFavorite
         WHERE id = :id
-    """)
+    """
+    )
     suspend fun markItemFavorite(id: String, isFavorite: Boolean)
 
     @Query(
@@ -68,4 +69,13 @@ interface ItemDao {
     """
     )
     fun getAllFavoriteItemIdsFlow(): Flow<List<String>>
+
+    @Query(
+        """
+        SELECT *
+        FROM item
+        WHERE id = :id
+    """
+    )
+    suspend fun getItemById(id: String): ItemEntity?
 }

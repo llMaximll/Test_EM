@@ -73,6 +73,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.llmaximll.test_em.core.common.Sort
 import com.github.llmaximll.test_em.core.common.Tag
+import com.github.llmaximll.test_em.core.common.components.CommonPagerTabs
 import com.github.llmaximll.test_em.core.common.log
 import com.github.llmaximll.test_em.core.common.models.Item
 import com.github.llmaximll.test_em.core.common.theme.AppColors
@@ -84,6 +85,7 @@ const val routeCatalogScreen = "catalog"
 @Composable
 fun CatalogScreen(
     modifier: Modifier = Modifier,
+    onProductDetailsNavigate: (String) -> Unit,
     viewModel: CatalogViewModel = hiltViewModel()
 ) {
     val itemsState by viewModel.itemsFetchState.collectAsState()
@@ -104,7 +106,8 @@ fun CatalogScreen(
         onMarkFavorite = viewModel::markItemFavorite,
         onTryAgainRequest = viewModel::fetchItemsRemote,
         onSortChange = viewModel::changeSort,
-        onTagChange = viewModel::changeTag
+        onTagChange = viewModel::changeTag,
+        onProductDetailsNavigate = onProductDetailsNavigate
     )
 }
 
@@ -118,6 +121,7 @@ private fun Content(
     onTryAgainRequest: () -> Unit,
     onSortChange: (Sort) -> Unit,
     onTagChange: (Tag?) -> Unit,
+    onProductDetailsNavigate: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     AnimatedContent(
@@ -139,7 +143,8 @@ private fun Content(
                 currentTag = currentTag,
                 onMarkFavorite = onMarkFavorite,
                 onSortChange = onSortChange,
-                onTagChange = onTagChange
+                onTagChange = onTagChange,
+                onProductDetailsNavigate = onProductDetailsNavigate
             )
         }
     }
@@ -154,6 +159,7 @@ private fun ContentList(
     onMarkFavorite: (String, Boolean) -> Unit,
     onSortChange: (Sort) -> Unit,
     onTagChange: (Tag?) -> Unit,
+    onProductDetailsNavigate: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -190,7 +196,8 @@ private fun ContentList(
                     modifier = Modifier.height(maxHeightInRowDp),
                     item = item,
                     isFavorite = item.id in favoriteItemIds,
-                    onMarkFavorite = onMarkFavorite
+                    onMarkFavorite = onMarkFavorite,
+                    onProductDetailsNavigate = onProductDetailsNavigate
                 )
             }
         }
@@ -203,14 +210,13 @@ private fun ContentItem(
     item: Item,
     isFavorite: Boolean,
     onMarkFavorite: (String, Boolean) -> Unit,
+    onProductDetailsNavigate: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedCard(
         modifier = modifier
             .fillMaxWidth(),
-        onClick = {
-
-        },
+        onClick = { onProductDetailsNavigate(item.id) },
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(
             width = 2.dp,
@@ -224,7 +230,7 @@ private fun ContentItem(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            val drawableResList = Image.entries.filter { item.id in it.ids }.map { it.drawableRes }
+            val drawableResList = com.github.llmaximll.test_em.core.common.Image.entries.filter { item.id in it.ids }.map { it.drawableRes }
 
             Box(
                 contentAlignment = Alignment.Center
@@ -264,7 +270,7 @@ private fun ContentItem(
                     }
                 }
 
-                ContentItemImageTabs(
+                CommonPagerTabs(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(8.dp),
@@ -375,35 +381,6 @@ private fun ContentItem(
                     painter = painterResource(id = ResCommon.drawable.ic_plus),
                     contentDescription = null,
                     tint = AppColors.ElementWhite
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun ContentItemImageTabs(
-    pagerState: PagerState,
-    modifier: Modifier = Modifier
-) {
-    AnimatedContent(
-        modifier = modifier,
-        targetState = pagerState.currentPage,
-        label = "ContentItemImageTabs"
-    ) { currentIndex ->
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            repeat(pagerState.pageCount) { index ->
-                Spacer(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .background(
-                            color = if (index == currentIndex) AppColors.ElementPink else AppColors.ElementLightGrey,
-                            shape = CircleShape
-                        )
                 )
             }
         }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="features_product_details_not_found">Произошла ошибка! Продукт не найден</string>
+    <string name="features_product_details_available">Доступно для заказа %1$d %2$s</string>
+    <string name="features_product_details_available_piece_1">штука</string>
+    <string name="features_product_details_available_piece_2">штуки</string>
+    <string name="features_product_details_available_piece_3">штук</string>
+    
+    <plurals name="piece">
+        <item quantity="zero">штук</item>
+        <item quantity="one">штука</item>
+        <item quantity="two">штуки</item>
+        <item quantity="few">штуки</item>
+        <item quantity="many">штук</item>
+        <item quantity="other">штук</item>
+    </plurals>
+</resources>

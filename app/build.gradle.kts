@@ -58,6 +58,9 @@ dependencies {
     implementation(project(":features:sign-up"))
     implementation(project(":features:main"))
     implementation(project(":features:catalog"))
+    implementation(project(":features:cart"))
+    implementation(project(":features:discount"))
+    implementation(project(":features:product-details"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

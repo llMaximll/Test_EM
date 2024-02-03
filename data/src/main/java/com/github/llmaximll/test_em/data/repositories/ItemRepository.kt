@@ -46,4 +46,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun getAllFavoriteItemIdsFlowLocal(): Flow<List<String>> =
         itemLocalDataSource.getAllFavoriteItemIdsFlow()
+
+    override suspend fun getItemByIdLocal(id: String): Item? =
+        itemLocalDataSource.getItemById(id)?.asModel()
 }

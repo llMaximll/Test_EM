@@ -1,4 +1,4 @@
-package com.github.llmaximll.test_em.features.catalog
+package com.github.llmaximll.test_em.core.common
 
 import androidx.annotation.DrawableRes
 

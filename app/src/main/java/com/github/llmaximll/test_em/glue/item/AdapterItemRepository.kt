@@ -21,4 +21,7 @@ class AdapterItemRepository @Inject constructor(
 
     override fun getAllFavoriteItemIdsFlowLocal(): Flow<List<String>> =
         itemRepository.getAllFavoriteItemIdsFlowLocal()
+
+    override suspend fun getItemByIdLocal(id: String): Item? =
+        itemRepository.getItemByIdLocal(id)
 }

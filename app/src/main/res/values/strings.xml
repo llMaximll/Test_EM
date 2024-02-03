@@ -7,4 +7,5 @@
     <string name="destination_title_cart">Корзина</string>
     <string name="destination_title_discount">Акции</string>
     <string name="destination_title_profile">Профиль</string>
+    <string name="destination_title_product_details"/>
 </resources>

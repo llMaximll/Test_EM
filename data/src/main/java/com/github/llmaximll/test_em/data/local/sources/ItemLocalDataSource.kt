@@ -16,6 +16,8 @@ interface ItemLocalDataSource {
     suspend fun markItemFavorite(id: String, isFavorite: Boolean)
 
     fun getAllFavoriteItemIdsFlow(): Flow<List<String>>
+
+    suspend fun getItemById(id: String): ItemEntity?
 }
 
 class ItemLocalDataSourceImpl @Inject constructor(
@@ -39,4 +41,7 @@ class ItemLocalDataSourceImpl @Inject constructor(
 
     override fun getAllFavoriteItemIdsFlow(): Flow<List<String>> =
         itemDao.getAllFavoriteItemIdsFlow()
+
+    override suspend fun getItemById(id: String): ItemEntity? =
+        itemDao.getItemById(id)
 }
