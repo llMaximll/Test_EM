@@ -24,7 +24,7 @@ fun MainScreen(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.placeholder),
+            text = stringResource(id = R.string.core_common_placeholder),
             style = CustomTypography.title1,
             color = AppColors.TextDarkGrey,
             textAlign = TextAlign.Center

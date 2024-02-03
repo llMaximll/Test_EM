@@ -11,6 +11,7 @@ data class Item(
     val description: String,
     val info: List<Info>,
     val ingredients: String,
+    val isFavorite: Boolean
 ) {
     data class Price(
         val price: Int,

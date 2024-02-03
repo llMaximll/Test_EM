@@ -35,5 +35,5 @@ fun CommonTopAppBar(
 @Preview
 @Composable
 private fun CommonTopAppBarPreview() {
-    CommonTopAppBar(titleRes = R.string.placeholder)
+    CommonTopAppBar(titleRes = R.string.core_common_placeholder)
 }

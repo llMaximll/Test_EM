@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="placeholder">Placeholder</string>
+    <string name="core_common_placeholder">Placeholder</string>
+    <string name="core_common_try_again">Попытаться снова</string>
+    <string name="core_common_sort_standard">Без сортировки</string>
+    <string name="core_common_sort_popular">По популярности</string>
+    <string name="core_common_sort_reducing_price">По уменьшению цены</string>
+    <string name="core_common_sort_ascending_price">По возрастанию цены</string>
+    <string name="core_common_filter_all">Смотреть все</string>
+    <string name="core_common_filter_face">Лицо</string>
+    <string name="core_common_filter_body">Тело</string>
+    <string name="core_common_filter_suntan">Загар</string>
+    <string name="core_common_filter_mask">Маски</string>
 </resources>

@@ -1,14 +1,21 @@
 package com.github.llmaximll.test_em.data.local.sources
 
+import com.github.llmaximll.test_em.core.common.Sort
+import com.github.llmaximll.test_em.core.common.Tag
 import com.github.llmaximll.test_em.data.local.daos.ItemDao
 import com.github.llmaximll.test_em.data.local.models.ItemEntity
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface ItemLocalDataSource {
 
     suspend fun insertItems(items: List<ItemEntity>)
 
-    suspend fun getAllItems(): List<ItemEntity>
+    suspend fun getAllItems(sort: Sort, tag: Tag): List<ItemEntity>
+
+    suspend fun markItemFavorite(id: String, isFavorite: Boolean)
+
+    fun getAllFavoriteItemIdsFlow(): Flow<List<String>>
 }
 
 class ItemLocalDataSourceImpl @Inject constructor(
@@ -19,6 +26,17 @@ class ItemLocalDataSourceImpl @Inject constructor(
         itemDao.insertItems(items)
     }
 
-    override suspend fun getAllItems(): List<ItemEntity> =
-        itemDao.getAllItems()
+    override suspend fun getAllItems(sort: Sort, tag: Tag): List<ItemEntity> = when (sort) {
+        Sort.Standard -> itemDao.getAllItems(tag.tag)
+        Sort.Popular -> itemDao.getAllItemsOrderByPopular(tag.tag)
+        Sort.ReducingPrice -> itemDao.getAllItemsOrderByPriceDesc(tag.tag)
+        Sort.AscendingPrice -> itemDao.getAllItemsOrderByPrice(tag.tag)
+    }
+
+    override suspend fun markItemFavorite(id: String, isFavorite: Boolean) {
+        itemDao.markItemFavorite(id, isFavorite)
+    }
+
+    override fun getAllFavoriteItemIdsFlow(): Flow<List<String>> =
+        itemDao.getAllFavoriteItemIdsFlow()
 }

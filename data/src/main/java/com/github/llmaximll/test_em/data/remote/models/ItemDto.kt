@@ -49,7 +49,8 @@ data class ItemDto(
                 available = this.available ?: 0,
                 description = this.description ?: "",
                 info = this.info?.map { it.asModel() } ?: emptyList(),
-                ingredients = this.ingredients ?: ""
+                ingredients = this.ingredients ?: "",
+                isFavorite = false
             )
         }
 
@@ -87,7 +88,8 @@ data class ItemDto(
                 available = this.available ?: 0,
                 description = this.description ?: "",
                 info = this.info?.map { it.asEntity() } ?: emptyList(),
-                ingredients = this.ingredients ?: ""
+                ingredients = this.ingredients ?: "",
+                isFavorite = false
             )
         }
 

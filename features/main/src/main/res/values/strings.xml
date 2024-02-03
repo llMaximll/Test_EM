@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="placeholder">Экран \"Главная\"</string>
+    <string name="core_common_placeholder">Экран \"Главная\"</string>
 </resources>

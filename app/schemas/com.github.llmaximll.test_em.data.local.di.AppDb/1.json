@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d24ad151158ff2610e1c2617a19f3689",
+    "identityHash": "2c0043a543df8f8ca0caf176dea84e63",
     "entities": [
       {
         "tableName": "user",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `subtitle` TEXT NOT NULL, `price` TEXT, `feedback` TEXT, `tags` TEXT NOT NULL, `available` INTEGER NOT NULL, `description` TEXT NOT NULL, `info` TEXT NOT NULL, `ingredients` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `title` TEXT NOT NULL, `subtitle` TEXT NOT NULL, `tags` TEXT NOT NULL, `available` INTEGER NOT NULL, `description` TEXT NOT NULL, `info` TEXT NOT NULL, `ingredients` TEXT NOT NULL, `isFavorite` INTEGER NOT NULL, `price` INTEGER, `discount` INTEGER, `priceWithDiscount` INTEGER, `unit` TEXT, `count` INTEGER, `rating` REAL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -63,18 +63,6 @@
             "columnName": "subtitle",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "price",
-            "columnName": "price",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "feedback",
-            "columnName": "feedback",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "tags",
@@ -105,6 +93,48 @@
             "columnName": "ingredients",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "isFavorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price.price",
+            "columnName": "price",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "price.discount",
+            "columnName": "discount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "price.priceWithDiscount",
+            "columnName": "priceWithDiscount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "price.unit",
+            "columnName": "unit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "feedback.count",
+            "columnName": "count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "feedback.rating",
+            "columnName": "rating",
+            "affinity": "REAL",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -120,7 +150,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd24ad151158ff2610e1c2617a19f3689')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2c0043a543df8f8ca0caf176dea84e63')"
     ]
   }
 }

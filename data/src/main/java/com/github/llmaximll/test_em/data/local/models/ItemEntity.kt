@@ -12,21 +12,16 @@ data class ItemEntity(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo("id")
     val id: String,
-    @ColumnInfo("title")
-    val title: String,
-    @ColumnInfo("subtitle")
-    val subtitle: String,
-    val price: PriceEntity?,
-    val feedback: FeedbackEntity?,
-    @ColumnInfo("tags")
-    val tags: List<String>,
-    @ColumnInfo("available")
-    val available: Int,
-    @ColumnInfo("description")
-    val description: String,
+    @ColumnInfo("title") val title: String,
+    @ColumnInfo("subtitle") val subtitle: String,
+    @Embedded val price: PriceEntity?,
+    @Embedded val feedback: FeedbackEntity?,
+    @ColumnInfo("tags") val tags: List<String>,
+    @ColumnInfo("available") val available: Int,
+    @ColumnInfo("description") val description: String,
     val info: List<InfoEntity>,
-    @ColumnInfo("ingredients")
-    val ingredients: String,
+    @ColumnInfo("ingredients") val ingredients: String,
+    @ColumnInfo val isFavorite: Boolean
 ) {
     data class PriceEntity(
         @ColumnInfo("price") val price: Int,
@@ -57,7 +52,8 @@ data class ItemEntity(
                 available = this.available,
                 description = this.description,
                 info = this.info.map { it.asModel() },
-                ingredients = this.ingredients
+                ingredients = this.ingredients,
+                isFavorite = this.isFavorite
             )
         }
 
