@@ -9,6 +9,7 @@ import com.github.llmaximll.test_em.R
 import com.github.llmaximll.test_em.features.cart.routeCartScreen
 import com.github.llmaximll.test_em.features.catalog.routeCatalogScreen
 import com.github.llmaximll.test_em.features.discount.routeDiscountScreen
+import com.github.llmaximll.test_em.features.favorite.routeFavoriteScreen
 import com.github.llmaximll.test_em.features.main.routeMainScreen
 import com.github.llmaximll.test_em.features.product_details.routeProductDetailsScreen
 import com.github.llmaximll.test_em.features.profile.routeProfileScreen
@@ -45,6 +46,10 @@ enum class Destination(
     ProductDetails(
         titleRes = R.string.destination_title_product_details,
         route = routeProductDetailsScreen
+    ),
+    Favorite(
+        titleRes = R.string.destination_title_favorite,
+        route = routeFavoriteScreen
     )
 }
 

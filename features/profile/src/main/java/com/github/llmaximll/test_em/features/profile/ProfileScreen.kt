@@ -58,6 +58,7 @@ const val routeProfileScreen = "profile"
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
+    onFavoriteNavigate: () -> Unit,
     onExit: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
@@ -91,6 +92,7 @@ fun ProfileScreen(
         modifier = modifier,
         currentUserState = currentUserState,
         favoriteItemsCount = favoriteItemsCount,
+        onFavoriteNavigate = onFavoriteNavigate,
         onExit = {
             coroutineScope.launch {
                 viewModel.clearDatabase()
@@ -105,6 +107,7 @@ fun ProfileScreen(
 private fun ProfileState(
     currentUserState: CurrentUserState,
     favoriteItemsCount: Int,
+    onFavoriteNavigate: () -> Unit,
     onExit: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -123,6 +126,7 @@ private fun ProfileState(
             is CurrentUserState.Success -> ProfileContent(
                 user = state.user,
                 favoriteItemsCount = favoriteItemsCount,
+                onFavoriteNavigate = onFavoriteNavigate,
                 onExit = onExit
             )
         }
@@ -133,6 +137,7 @@ private fun ProfileState(
 private fun ProfileContent(
     user: User,
     favoriteItemsCount: Int,
+    onFavoriteNavigate: () -> Unit,
     onExit: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -148,6 +153,7 @@ private fun ProfileContent(
 
         ButtonsList(
             favoriteItemsCount = favoriteItemsCount,
+            onFavoriteNavigate = onFavoriteNavigate,
             onExit = onExit
         )
     }
@@ -213,6 +219,7 @@ private fun Fio(
 @Composable
 private fun ButtonsList(
     favoriteItemsCount: Int,
+    onFavoriteNavigate: () -> Unit,
     onExit: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -233,7 +240,8 @@ private fun ButtonsList(
                     R.plurals.favorite,
                     favoriteItemsCount
                 )
-            ) else ""
+            ) else "",
+            onClick = onFavoriteNavigate
         )
 
         ButtonsItem(

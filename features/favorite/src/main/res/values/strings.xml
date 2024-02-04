@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="features_favorite_tab_products">Товары</string>
+    <string name="features_favorite_tab_brands">Бренды</string>
+    <string name="features_favorite_not_found">Не найдено</string>
+</resources>

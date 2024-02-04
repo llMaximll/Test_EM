@@ -63,6 +63,7 @@ import com.github.llmaximll.test_em.core.common.components.LoadingState
 import com.github.llmaximll.test_em.core.common.components.NotFoundState
 import com.github.llmaximll.test_em.core.common.log
 import com.github.llmaximll.test_em.core.common.models.Item
+import com.github.llmaximll.test_em.core.common.states.LocalUiState
 import com.github.llmaximll.test_em.core.common.theme.AppColors
 import com.github.llmaximll.test_em.core.common.theme.CustomTypography
 import com.smarttoolfactory.ratingbar.RatingBar
@@ -97,21 +98,21 @@ fun ProductDetailsScreen(
 
 @Composable
 fun ProductDetailsState(
-    itemState: ItemState,
+    itemState: LocalUiState<Item>,
     isFavorite: Boolean,
     onMarkFavorite: (String, Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     when (itemState) {
-        ItemState.Init -> LoadingState()
-        ItemState.Loading -> LoadingState()
-        ItemState.NotFound -> NotFoundState(
+        LocalUiState.Init -> LoadingState()
+        LocalUiState.Loading -> LoadingState()
+        LocalUiState.NotFound -> NotFoundState(
             textRes = R.string.features_product_details_not_found
         )
-        is ItemState.Success -> {
+        is LocalUiState.Success -> {
             ProductDetailsContent(
                 modifier = modifier,
-                item = itemState.item,
+                item = itemState.data,
                 isFavorite = isFavorite,
                 onMarkFavorite = onMarkFavorite
             )

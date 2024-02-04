@@ -77,6 +77,15 @@ interface ItemDao {
         """
         SELECT *
         FROM item
+        WHERE isFavorite = 1
+    """
+    )
+    fun getAllFavoriteItemsFlow(): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT *
+        FROM item
         WHERE id = :id
     """
     )

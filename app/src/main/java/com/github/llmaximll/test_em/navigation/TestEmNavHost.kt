@@ -12,21 +12,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.github.llmaximll.sign_up.SignUpScreen
-import com.github.llmaximll.sign_up.routeSignUpScreen
 import com.github.llmaximll.test_em.core.common.ext.asUrlDecoded
 import com.github.llmaximll.test_em.core.common.ext.asUrlEncoded
 import com.github.llmaximll.test_em.features.cart.CartScreen
 import com.github.llmaximll.test_em.features.cart.routeCartScreen
 import com.github.llmaximll.test_em.features.catalog.CatalogScreen
-import com.github.llmaximll.test_em.features.catalog.routeCatalogScreen
 import com.github.llmaximll.test_em.features.discount.DiscountScreen
-import com.github.llmaximll.test_em.features.discount.routeDiscountScreen
+import com.github.llmaximll.test_em.features.favorite.FavoriteScreen
 import com.github.llmaximll.test_em.features.main.MainScreen
-import com.github.llmaximll.test_em.features.main.routeMainScreen
 import com.github.llmaximll.test_em.features.product_details.ProductDetailsScreen
 import com.github.llmaximll.test_em.features.product_details.routeProductDetailsScreen
 import com.github.llmaximll.test_em.features.profile.ProfileScreen
-import com.github.llmaximll.test_em.features.profile.routeProfileScreen
 
 @Composable
 fun TestEmNavHost(
@@ -102,12 +98,25 @@ fun TestEmNavHost(
             route = Destination.Profile.route
         ) {
             ProfileScreen(
+                onFavoriteNavigate = {
+                    navController.navigate(Destination.Favorite.route)
+                },
                 onExit = {
                     navController.navigate(Destination.SignUp.route) {
                         popUpTo(navController.graph.id) {
                             inclusive = true
                         }
                     }
+                }
+            )
+        }
+
+        composable(
+            route = Destination.Favorite.route
+        ) {
+            FavoriteScreen(
+                onProductDetailsNavigate = { productId ->
+                    navController.navigate("${Destination.ProductDetails.route}/${productId.asUrlEncoded()}")
                 }
             )
         }

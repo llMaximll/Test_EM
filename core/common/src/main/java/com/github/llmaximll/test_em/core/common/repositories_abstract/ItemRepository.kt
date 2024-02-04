@@ -13,6 +13,8 @@ interface ItemRepository {
 
     fun getAllFavoriteItemIdsFlowLocal(): Flow<List<String>>
 
+    fun getAllFavoriteItemsFlowLocal(): Flow<List<Item>>
+
     suspend fun getItemByIdLocal(id: String): Item?
 
     suspend fun getFavoriteItemsCountLocal(): Int

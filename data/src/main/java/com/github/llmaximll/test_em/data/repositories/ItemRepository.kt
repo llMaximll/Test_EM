@@ -11,6 +11,7 @@ import com.github.llmaximll.test_em.data.remote.models.ItemDto.Companion.asEntit
 import com.github.llmaximll.test_em.data.remote.sources.ItemRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ItemRepositoryImpl @Inject constructor(
@@ -47,6 +48,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun getAllFavoriteItemIdsFlowLocal(): Flow<List<String>> =
         itemLocalDataSource.getAllFavoriteItemIdsFlow()
+
+    override fun getAllFavoriteItemsFlowLocal(): Flow<List<Item>> =
+        itemLocalDataSource.getAllFavoriteItemsFlow().map { list -> list.map { it.asModel() } }
 
     override suspend fun getItemByIdLocal(id: String): Item? =
         itemLocalDataSource.getItemById(id)?.asModel()

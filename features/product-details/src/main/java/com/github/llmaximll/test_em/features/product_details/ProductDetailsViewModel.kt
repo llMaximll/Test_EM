@@ -7,6 +7,7 @@ import com.github.llmaximll.test_em.core.common.Sort
 import com.github.llmaximll.test_em.core.common.launchWithHandler
 import com.github.llmaximll.test_em.core.common.models.Item
 import com.github.llmaximll.test_em.core.common.repositories_abstract.ItemRepository
+import com.github.llmaximll.test_em.core.common.states.LocalUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -29,8 +30,8 @@ class ProductDetailsViewModel @Inject constructor(
 
     private val productId: String = savedStateHandle["productId"] ?: "-1"
 
-    private val _itemState = MutableStateFlow<ItemState>(ItemState.Init)
-    val itemState: StateFlow<ItemState> = _itemState.asStateFlow()
+    private val _itemState = MutableStateFlow<LocalUiState<Item>>(LocalUiState.Init)
+    val itemState: StateFlow<LocalUiState<Item>> = _itemState.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val isFavorite: Flow<Boolean> = itemRepository.getAllFavoriteItemIdsFlowLocal().mapLatest { list ->
@@ -47,17 +48,17 @@ class ProductDetailsViewModel @Inject constructor(
 
     private fun getItemById() = launchWithHandler(
         onException = {
-            _itemState.value = ItemState.NotFound
+            _itemState.value = LocalUiState.NotFound
         }
     ) {
-        _itemState.value = ItemState.Loading
+        _itemState.value = LocalUiState.Loading
 
         val data = itemRepository.getItemByIdLocal(productId)
 
         if (data != null) {
-            _itemState.value = ItemState.Success(data)
+            _itemState.value = LocalUiState.Success(data)
         } else {
-            _itemState.value = ItemState.NotFound
+            _itemState.value = LocalUiState.NotFound
         }
     }
 
@@ -71,15 +72,4 @@ class ProductDetailsViewModel @Inject constructor(
             itemRepository.markItemFavoriteLocal(id, isFavorite)
         }
     }
-}
-
-sealed class ItemState {
-
-    data object Init : ItemState()
-
-    data object Loading : ItemState()
-
-    data object NotFound : ItemState()
-
-    data class Success(val item: Item) : ItemState()
 }

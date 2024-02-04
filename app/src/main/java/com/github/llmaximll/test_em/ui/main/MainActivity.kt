@@ -221,7 +221,7 @@ class MainActivity @Inject constructor(
             navigationIcon = {
                 AnimatedVisibility(
                     visible = destination?.route?.takeWhile { it != '/' } in listOf(
-                        Destination.ProductDetails.route
+                        Destination.ProductDetails.route, Destination.Favorite.route
                     ),
                     enter = fadeIn() + scaleIn(),
                     exit = fadeOut() + scaleOut()

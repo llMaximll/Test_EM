@@ -9,4 +9,5 @@
     <string name="destination_title_profile">Профиль</string>
     <string name="destination_title_profile_top_bar">Личный кабинет</string>
     <string name="destination_title_product_details"/>
+    <string name="destination_title_favorite">Избранное</string>
 </resources>
