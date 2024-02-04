@@ -24,4 +24,7 @@ class AdapterItemRepository @Inject constructor(
 
     override suspend fun getItemByIdLocal(id: String): Item? =
         itemRepository.getItemByIdLocal(id)
+
+    override suspend fun getFavoriteItemsCountLocal(): Int =
+        itemRepository.getFavoriteItemsCountLocal()
 }

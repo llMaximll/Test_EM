@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ItemDao {
 
+    @Query("DELETE FROM item")
+    suspend fun deleteAllFromItem(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItems(items: List<ItemEntity>)
 

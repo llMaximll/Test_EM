@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":features:cart"))
     implementation(project(":features:discount"))
     implementation(project(":features:product-details"))
+    implementation(project(":features:profile"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

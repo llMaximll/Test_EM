@@ -10,6 +10,7 @@ import com.github.llmaximll.test_em.data.local.sources.ItemLocalDataSource
 import com.github.llmaximll.test_em.data.remote.models.ItemDto.Companion.asEntity
 import com.github.llmaximll.test_em.data.remote.sources.ItemRemoteDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class ItemRepositoryImpl @Inject constructor(
@@ -49,4 +50,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun getItemByIdLocal(id: String): Item? =
         itemLocalDataSource.getItemById(id)?.asModel()
+
+    override suspend fun getFavoriteItemsCountLocal(): Int =
+        itemLocalDataSource.getAllFavoriteItemIdsFlow().firstOrNull()?.size ?: 0
 }

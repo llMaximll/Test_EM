@@ -1,5 +1,6 @@
 package com.github.llmaximll.test_em.features.product_details
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -58,6 +59,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.llmaximll.test_em.core.common.Image
 import com.github.llmaximll.test_em.core.common.components.CommonPagerTabs
 import com.github.llmaximll.test_em.core.common.components.DiscountElement
+import com.github.llmaximll.test_em.core.common.components.LoadingState
+import com.github.llmaximll.test_em.core.common.components.NotFoundState
 import com.github.llmaximll.test_em.core.common.log
 import com.github.llmaximll.test_em.core.common.models.Item
 import com.github.llmaximll.test_em.core.common.theme.AppColors
@@ -100,9 +103,11 @@ fun ProductDetailsState(
     modifier: Modifier = Modifier
 ) {
     when (itemState) {
-        ItemState.Init -> ProductDetailsLoading()
-        ItemState.Loading -> ProductDetailsLoading()
-        ItemState.NotFound -> ProductDetailsNotFound()
+        ItemState.Init -> LoadingState()
+        ItemState.Loading -> LoadingState()
+        ItemState.NotFound -> NotFoundState(
+            textRes = R.string.features_product_details_not_found
+        )
         is ItemState.Success -> {
             ProductDetailsContent(
                 modifier = modifier,
@@ -587,40 +592,6 @@ fun CartButton(
                 text = stringResource(id = R.string.features_product_details_cart_button),
                 color = AppColors.TextWhite,
                 style = CustomTypography.button2
-            )
-        }
-    }
-}
-
-@Composable
-private fun ProductDetailsLoading(
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            progress = 0.89f // Захардкодено из-за бага: https://issuetracker.google.com/issues/322214617
-        )
-    }
-}
-
-@Composable
-private fun ProductDetailsNotFound(
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(id = R.string.features_product_details_not_found),
-                color = AppColors.TextBlack,
-                style = CustomTypography.title2
             )
         }
     }

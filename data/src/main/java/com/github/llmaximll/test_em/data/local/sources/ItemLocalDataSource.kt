@@ -9,6 +9,8 @@ import javax.inject.Inject
 
 interface ItemLocalDataSource {
 
+    suspend fun deleteAllFromItem(): Int
+
     suspend fun insertItems(items: List<ItemEntity>)
 
     suspend fun getAllItems(sort: Sort, tag: Tag): List<ItemEntity>
@@ -23,6 +25,9 @@ interface ItemLocalDataSource {
 class ItemLocalDataSourceImpl @Inject constructor(
     private val itemDao: ItemDao
 ) : ItemLocalDataSource {
+
+    override suspend fun deleteAllFromItem(): Int =
+        itemDao.deleteAllFromItem()
 
     override suspend fun insertItems(items: List<ItemEntity>) {
         itemDao.insertItems(items)

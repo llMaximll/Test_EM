@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/features/discount" />
             <option value="$PROJECT_DIR$/features/main" />
             <option value="$PROJECT_DIR$/features/product-details" />
+            <option value="$PROJECT_DIR$/features/profile" />
             <option value="$PROJECT_DIR$/features/sign-up" />
           </set>
         </option>

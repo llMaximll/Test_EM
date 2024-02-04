@@ -7,4 +7,6 @@ interface UserRepository {
     suspend fun insertUserLocal(user: User): Long?
 
     suspend fun isUserLoggedInLocal(): Boolean
+
+    suspend fun getCurrentUserLocal(): Result<User>
 }

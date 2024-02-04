@@ -19,11 +19,14 @@ import com.github.llmaximll.test_em.features.cart.CartScreen
 import com.github.llmaximll.test_em.features.cart.routeCartScreen
 import com.github.llmaximll.test_em.features.catalog.CatalogScreen
 import com.github.llmaximll.test_em.features.catalog.routeCatalogScreen
+import com.github.llmaximll.test_em.features.discount.DiscountScreen
 import com.github.llmaximll.test_em.features.discount.routeDiscountScreen
 import com.github.llmaximll.test_em.features.main.MainScreen
 import com.github.llmaximll.test_em.features.main.routeMainScreen
 import com.github.llmaximll.test_em.features.product_details.ProductDetailsScreen
 import com.github.llmaximll.test_em.features.product_details.routeProductDetailsScreen
+import com.github.llmaximll.test_em.features.profile.ProfileScreen
+import com.github.llmaximll.test_em.features.profile.routeProfileScreen
 
 @Composable
 fun TestEmNavHost(
@@ -35,15 +38,15 @@ fun TestEmNavHost(
         modifier = modifier
             .padding(horizontal = 12.dp),
         navController = navController,
-        startDestination = if (isUserLoggedIn) routeMainScreen else routeSignUpScreen,
+        startDestination = if (isUserLoggedIn) Destination.Main.route else Destination.SignUp.route,
         contentAlignment = Alignment.Center
     ) {
         composable(
-            route = routeSignUpScreen
+            route = Destination.SignUp.route
         ) {
             SignUpScreen(
                 onSignUp = {
-                    navController.navigate(routeMainScreen) {
+                    navController.navigate(Destination.Main.route) {
                         navController.graph.findStartDestination().route?.let { route ->
                             popUpTo(route) {
                                 inclusive = true
@@ -55,13 +58,13 @@ fun TestEmNavHost(
         }
 
         composable(
-            route = routeMainScreen
+            route = Destination.Main.route
         ) {
             MainScreen()
         }
 
         composable(
-            route = routeCatalogScreen
+            route = Destination.Catalog.route
         ) {
             CatalogScreen(
                 onProductDetailsNavigate = { productId ->
@@ -77,7 +80,7 @@ fun TestEmNavHost(
         }
 
         composable(
-            route = "$routeProductDetailsScreen/{productId}",
+            route = "${Destination.ProductDetails.route}/{productId}",
             arguments = listOf(
                 navArgument("productId") { type = NavType.StringType }
             )
@@ -86,6 +89,26 @@ fun TestEmNavHost(
 
             ProductDetailsScreen(
                 productId = productId
+            )
+        }
+
+        composable(
+            route = Destination.Discount.route
+        ) {
+            DiscountScreen()
+        }
+
+        composable(
+            route = Destination.Profile.route
+        ) {
+            ProfileScreen(
+                onExit = {
+                    navController.navigate(Destination.SignUp.route) {
+                        popUpTo(navController.graph.id) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
     }

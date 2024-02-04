@@ -14,4 +14,7 @@ class AdapterUserRepository @Inject constructor(
 
     override suspend fun isUserLoggedInLocal(): Boolean =
         userRepository.isUserLoggedInLocal()
+
+    override suspend fun getCurrentUserLocal(): Result<User> =
+        userRepository.getCurrentUserLocal()
 }

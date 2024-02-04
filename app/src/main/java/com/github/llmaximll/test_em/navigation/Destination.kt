@@ -11,6 +11,7 @@ import com.github.llmaximll.test_em.features.catalog.routeCatalogScreen
 import com.github.llmaximll.test_em.features.discount.routeDiscountScreen
 import com.github.llmaximll.test_em.features.main.routeMainScreen
 import com.github.llmaximll.test_em.features.product_details.routeProductDetailsScreen
+import com.github.llmaximll.test_em.features.profile.routeProfileScreen
 import com.github.llmaximll.test_em.core.common.R as ResCommon
 
 enum class Destination(
@@ -39,7 +40,7 @@ enum class Destination(
     ),
     Profile(
         titleRes = R.string.destination_title_profile,
-        route = ""
+        route = routeProfileScreen
     ),
     ProductDetails(
         titleRes = R.string.destination_title_product_details,
@@ -81,4 +82,7 @@ enum class TopLevelDestination(
 
 @Composable
 fun NavDestination?.titleResOrNull(): Int? =
-    Destination.entries.find { it.route == this?.route }?.titleRes
+    if (this?.route != routeProfileScreen)
+        Destination.entries.find { it.route == this?.route }?.titleRes
+    else
+        R.string.destination_title_profile_top_bar

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="features_profile_not_found">Пользователь не найден</string>
+    <string name="features_profile_buttons_item_favorite">Избранное</string>
+    <string name="features_profile_buttons_item_shop">Магазины</string>
+    <string name="features_profile_buttons_item_feedback">Обратная связь</string>
+    <string name="features_profile_buttons_item_offer">Оферта</string>
+    <string name="features_profile_buttons_item_return_product">Возврат товара</string>
+    <string name="features_profile_favorite_plural">%1$d %2$s</string>
+    <string name="features_profile_button_exit">Выход</string>
+
+    <plurals name="favorite">
+        <item quantity="zero">товаров</item>
+        <item quantity="one">товар</item>
+        <item quantity="two">товара</item>
+        <item quantity="few">товаров</item>
+        <item quantity="many">товаров</item>
+        <item quantity="other">товаров</item>
+    </plurals>
+</resources>
