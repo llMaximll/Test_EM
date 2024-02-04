@@ -33,7 +33,7 @@ fun TestEmNavHost(
 ) {
     NavHost(
         modifier = modifier
-            .padding(12.dp),
+            .padding(horizontal = 12.dp),
         navController = navController,
         startDestination = if (isUserLoggedIn) routeMainScreen else routeSignUpScreen,
         contentAlignment = Alignment.Center

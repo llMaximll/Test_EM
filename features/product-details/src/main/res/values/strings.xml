@@ -5,6 +5,14 @@
     <string name="features_product_details_available_piece_1">штука</string>
     <string name="features_product_details_available_piece_2">штуки</string>
     <string name="features_product_details_available_piece_3">штук</string>
+    <string name="features_product_details_feedback">%1$d %2$s</string>
+    <string name="features_product_details_cost">%1$d %2$s</string>
+    <string name="features_product_details_description_label">Описание</string>
+    <string name="features_product_details_description_hide">Скрыть</string>
+    <string name="features_product_details_description_show">Подробнее</string>
+    <string name="features_product_details_spec_label">Характеристики</string>
+    <string name="features_product_details_structure_label">Состав</string>
+    <string name="features_product_details_cart_button">Добавить в корзину</string>
     
     <plurals name="piece">
         <item quantity="zero">штук</item>
@@ -13,5 +21,14 @@
         <item quantity="few">штуки</item>
         <item quantity="many">штук</item>
         <item quantity="other">штук</item>
+    </plurals>
+
+    <plurals name="feedback">
+        <item quantity="zero">отзывов</item>
+        <item quantity="one">отзыв</item>
+        <item quantity="two">отзыва</item>
+        <item quantity="few">отзывов</item>
+        <item quantity="many">отзывов</item>
+        <item quantity="other">отзывов</item>
     </plurals>
 </resources>

@@ -28,10 +28,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -74,6 +72,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.github.llmaximll.test_em.core.common.Sort
 import com.github.llmaximll.test_em.core.common.Tag
 import com.github.llmaximll.test_em.core.common.components.CommonPagerTabs
+import com.github.llmaximll.test_em.core.common.components.DiscountElement
 import com.github.llmaximll.test_em.core.common.log
 import com.github.llmaximll.test_em.core.common.models.Item
 import com.github.llmaximll.test_em.core.common.theme.AppColors
@@ -230,7 +229,9 @@ private fun ContentItem(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            val drawableResList = com.github.llmaximll.test_em.core.common.Image.entries.filter { item.id in it.ids }.map { it.drawableRes }
+            val drawableResList =
+                com.github.llmaximll.test_em.core.common.Image.entries.filter { item.id in it.ids }
+                    .map { it.drawableRes }
 
             Box(
                 contentAlignment = Alignment.Center
@@ -305,17 +306,7 @@ private fun ContentItem(
                         color = AppColors.TextBlack
                     )
 
-                    Text(
-                        modifier = Modifier
-                            .background(
-                                color = AppColors.BackgroundPink,
-                                shape = RoundedCornerShape(4.dp)
-                            )
-                            .padding(vertical = 4.dp, horizontal = 8.dp),
-                        text = "-${item.price?.discount}%",
-                        style = CustomTypography.text1,
-                        color = AppColors.TextWhite
-                    )
+                    DiscountElement(discount = item.price?.discount ?: 0)
                 }
 
                 Spacer(modifier = Modifier.height(4.dp))

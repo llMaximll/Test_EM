@@ -156,8 +156,12 @@ class MainActivity @Inject constructor(
                         log("NavigationBarItem:: destination: $destination currentDestination: $currentDestination")
 
                         NavigationBarItem(
-                            selected = currentDestination?.hierarchy?.any {
-                                it.route?.contains(destination.name, true) ?: false
+                            selected = currentDestination?.hierarchy?.toList()?.any {
+                                log("""navDestination: ${it.route?.takeWhile { char -> char != '/' }} 
+                                    |result: ${it.route?.takeWhile { char -> char != '/' }?.contains(destination.name, true)} 
+                                    |hierarchy: ${currentDestination.hierarchy.map { dest -> dest.route }.joinToString()}
+                                    |hierarchyFull: ${currentDestination.hierarchy.toList()}""".trimMargin())
+                                it.route?.takeWhile { char -> char != '/' }?.contains(destination.name, true) ?: false
                             } ?: false,
                             onClick = {
                                 log("NavigationBarItem:: selectedDestination: $destination")
