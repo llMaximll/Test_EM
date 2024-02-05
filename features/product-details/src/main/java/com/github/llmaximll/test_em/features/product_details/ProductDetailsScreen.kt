@@ -37,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -68,6 +69,7 @@ import com.github.llmaximll.test_em.core.common.theme.AppColors
 import com.github.llmaximll.test_em.core.common.theme.CustomTypography
 import com.smarttoolfactory.ratingbar.RatingBar
 import com.smarttoolfactory.ratingbar.model.GestureStrategy
+import kotlin.text.Typography.paragraph
 import com.github.llmaximll.test_em.core.common.R as ResCommon
 
 const val routeProductDetailsScreen = "product_details"
@@ -495,7 +497,8 @@ private fun Structure(
 
     Spacer(modifier = Modifier.height(12.dp))
 
-    var isIngredientsExpanded by remember { mutableStateOf(false) }
+    var lineCount by remember { mutableIntStateOf(Int.MAX_VALUE) }
+    var isIngredientsExpanded by remember { mutableStateOf(true) }
     Text(
         modifier = modifier
             .fillMaxWidth()
@@ -504,24 +507,21 @@ private fun Structure(
         color = AppColors.TextDarkGrey,
         style = CustomTypography.text1,
         maxLines = if (isIngredientsExpanded) Int.MAX_VALUE else 2,
-        overflow = TextOverflow.Ellipsis
+        overflow = TextOverflow.Ellipsis,
+        onTextLayout = {
+            if (it.lineCount > lineCount)
+                lineCount = it.lineCount
+            isIngredientsExpanded = false
+        }
     )
 
     Spacer(modifier = Modifier.height(8.dp))
 
-    val paragraph = androidx.compose.ui.text.Paragraph(
-        text = ingredients,
-        style = CustomTypography.text1,
-        constraints = Constraints(maxWidth = LocalConfiguration.current.screenWidthDp),
-        density = LocalDensity.current,
-        fontFamilyResolver = LocalFontFamilyResolver.current,
-    )
-
-    LaunchedEffect(paragraph.lineCount) {
-        log("paragraph.lineCount: ${paragraph.lineCount}")
+    LaunchedEffect(lineCount) {
+        log("lineCount: $lineCount")
     }
 
-    if (paragraph.lineCount > 2) {
+    if (lineCount > 2) {
         AnimatedContent(
             targetState = isIngredientsExpanded,
             label = "HideStructure"

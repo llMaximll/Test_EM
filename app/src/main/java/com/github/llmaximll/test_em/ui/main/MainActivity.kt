@@ -38,12 +38,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.github.llmaximll.test_em.R
 import com.github.llmaximll.test_em.core.common.log
 import com.github.llmaximll.test_em.core.common.theme.AppColors
 import com.github.llmaximll.test_em.core.common.theme.CustomTypography
@@ -71,7 +71,14 @@ class MainActivity @Inject constructor(
         setContent {
             Test_EMTheme {
                 val navController = rememberNavController()
-                val destination = navController.currentBackStackEntryAsState().value?.destination
+                val backStackEntry = navController.currentBackStackEntryAsState().value
+                val destination = backStackEntry?.destination
+
+                LaunchedEffect(destination) {
+                    log("""destinationHierarchy: ${destination?.hierarchy?.map { it.route }?.toList()}
+                        |backStack:${navController.backQueue.map { it.destination.route }.toList()}
+                    """.trimMargin())
+                }
 
                 /*val currentTopLevelDestination = remember {
                     TopLevelDestination.entries.find { it.route == destination?.route }
@@ -156,13 +163,21 @@ class MainActivity @Inject constructor(
                         log("NavigationBarItem:: destination: $destination currentDestination: $currentDestination")
 
                         NavigationBarItem(
-                            selected = currentDestination?.hierarchy?.toList()?.any {
-                                log("""navDestination: ${it.route?.takeWhile { char -> char != '/' }} 
-                                    |result: ${it.route?.takeWhile { char -> char != '/' }?.contains(destination.name, true)} 
-                                    |hierarchy: ${currentDestination.hierarchy.map { dest -> dest.route }.joinToString()}
-                                    |hierarchyFull: ${currentDestination.hierarchy.toList()}""".trimMargin())
-                                it.route?.takeWhile { char -> char != '/' }?.contains(destination.name, true) ?: false
-                            } ?: false,
+                            selected = currentDestination?.hierarchy?.any {
+                                log(
+                                    """navDestination: ${it.route?.takeWhile { char -> char != '/' }} 
+                                    |result: ${
+                                        it.route?.takeWhile { char -> char != '/' }
+                                            ?.contains(destination.name, true) == true
+                                    } 
+                                    |hierarchy: ${
+                                        currentDestination.hierarchy.map { dest -> dest.route?.takeWhile { char -> char != '/' } }
+                                            .toList()
+                                    }
+                                    |hierarchyFull: ${currentDestination.hierarchy.toList()}""".trimMargin()
+                                )
+                                it.route?.takeWhile { char -> char != '/' } == destination.route
+                            } == true,
                             onClick = {
                                 log("NavigationBarItem:: selectedDestination: $destination")
                                 onNavigateToDestination(destination)

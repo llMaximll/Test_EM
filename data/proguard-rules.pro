@@ -21,3 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class com.github.llmaximll.test_em.data.remote.models.** { *; }
+-dontwarn com.github.llmaximll.test_em.core.common.models.Item$Feedback
+-dontwarn com.github.llmaximll.test_em.core.common.models.Item$Info
+-dontwarn com.github.llmaximll.test_em.core.common.models.Item$Price
+-dontwarn com.github.llmaximll.test_em.core.common.models.Item

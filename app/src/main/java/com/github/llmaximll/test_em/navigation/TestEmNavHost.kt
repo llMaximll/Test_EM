@@ -34,8 +34,7 @@ fun TestEmNavHost(
         modifier = modifier
             .padding(horizontal = 12.dp),
         navController = navController,
-        startDestination = if (isUserLoggedIn) Destination.Main.route else Destination.SignUp.route,
-        contentAlignment = Alignment.Center
+        startDestination = if (isUserLoggedIn) Destination.Catalog.route else Destination.SignUp.route
     ) {
         composable(
             route = Destination.SignUp.route

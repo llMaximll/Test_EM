@@ -71,6 +71,8 @@ class CatalogViewModel @Inject constructor(
             if (itemsFetchState.firstOrNull() is FetchState.Loading)
                 return@launchWithHandler
 
+            _itemsFetchState.value = FetchState.Loading
+
             log("fetchItemsRemote:: sort: ${currentSort.value} tag: ${currentTag.value}")
 
             val result = itemRepository.getItemsRemoteOrCache(

@@ -66,7 +66,10 @@ fun CommonItemsList(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        itemsIndexed(items) { index, item ->
+        itemsIndexed(
+            items = items,
+            key = { _, item -> item.id }
+        ) { index, item ->
             val row by remember { derivedStateOf { lazyGridState.layoutInfo.visibleItemsInfo.find { it.index == index }?.row } }
             val itemsInRow by remember { derivedStateOf { lazyGridState.layoutInfo.visibleItemsInfo.filter { it.row == row } } }
             val maxHeightInRow = itemsInRow.maxOfOrNull { it.size.height }
